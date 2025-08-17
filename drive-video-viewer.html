@@ -64,17 +64,74 @@
       padding: 10px;
     }
 
-    .card iframe {
-      width: 100%;
-      height: 150px;
-      border: none;
-      border-radius: 4px;
-    }
-
     .card h3 {
       margin: 10px 0 0;
       font-size: 0.9rem;
       text-align: center;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      height: 150px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+    }
+
+    .play-btn {
+      background: #fff;
+      color: #000;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 50%;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .meta {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 10px;
+      color: #fff;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .controls button {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
     }
 
     html, body {
@@ -96,66 +153,61 @@
 
   <div class="section-title">🎞️ Guide Videos</div>
   <div class="grid" id="videoGrid">
+    <!-- Video Cards -->
+    <script>
+      const videos = [
+        { id: "1P5Aa179THk-2qIDFp8KsSmVJoY3eHRtw", title: "App and bonus" },
+        { id: "1PJvASoJ0s1y2vtDe8cJXmODyUyeRfMVA", title: "Friday bonus" },
+        { id: "1RLdxOGoxLiA3DdNr19S68MnI3aqPsSgj", title: "Ga ချိတ်/ဖြုတ်" },
+        { id: "1PEvsEFe12HjtBaEgrk67qoaAhZojuGVN", title: "Hyper Bonus" },
+        { id: "1PQY4wSjIQRjt0q7gkK0Tm3YC0AANRPHf", title: "Monday bonus" },
+        { id: "1P4AVEKKQr4EFczBFFToGet3LKDuLVOn-", title: "System bet" },
+        { id: "1PHbk8t2aw-Hc_785Ster9hpqlpNw61wz", title: "Top bins" },
+        { id: "1PDyQ94yAkFBbNk-qm9PbrhGBKZQPXr7f", title: "X2 Wednesday promotion" },
+        { id: "1PQxDktomqsfwg4T0uiAdi1RtAleloBSy", title: "How to Sign up?" },
+        { id: "10USKQYSCAnizbQcu88XJbnd8GAvcDho2", title: "Loboki Bet Builder" }
+      ];
 
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/1P5Aa179THk-2qIDFp8KsSmVJoY3eHRtw/preview" allowfullscreen></iframe>
-      <h3>App and bonus</h3>
-    </div>
-
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/1PJvASoJ0s1y2vtDe8cJXmODyUyeRfMVA/preview" allowfullscreen></iframe>
-      <h3>Friday bonus</h3>
-    </div>
-
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/1RLdxOGoxLiA3DdNr19S68MnI3aqPsSgj/preview" allowfullscreen></iframe>
-      <h3>Ga ချိတ်/ဖြုတ်</h3>
-    </div>
-
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/1PEvsEFe12HjtBaEgrk67qoaAhZojuGVN/preview" allowfullscreen></iframe>
-      <h3>Hyper Bonus</h3>
-    </div>
-
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/1PQY4wSjIQRjt0q7gkK0Tm3YC0AANRPHf/preview" allowfullscreen></iframe>
-      <h3>Monday bonus</h3>
-    </div>
-
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/1P4AVEKKQr4EFczBFFToGet3LKDuLVOn-/preview" allowfullscreen></iframe>
-      <h3>System bet</h3>
-    </div>
-
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/1PHbk8t2aw-Hc_785Ster9hpqlpNw61wz/preview" allowfullscreen></iframe>
-      <h3>Top bins</h3>
-    </div>
-
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/1PDyQ94yAkFBbNk-qm9PbrhGBKZQPXr7f/preview" allowfullscreen></iframe>
-      <h3>X2 Wednesday promotion</h3>
-    </div>
-
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/1PQxDktomqsfwg4T0uiAdi1RtAleloBSy/preview" allowfullscreen></iframe>
-      <h3>How to Sign up?</h3>
-    </div>
-
-    <div class="card">
-      <iframe src="https://drive.google.com/file/d/10USKQYSCAnizbQcu88XJbnd8GAvcDho2/preview" allowfullscreen></iframe>
-      <h3>Loboki Bet Builder</h3>
-    </div>
-
+      const grid = document.getElementById("videoGrid");
+      videos.forEach((video, index) => {
+        const vidId = `vid${index}`;
+        grid.innerHTML += `
+          <div class="card">
+            <div class="video-wrapper">
+              <video src="https://drive.google.com/uc?export=download&id=${video.id}" preload="metadata" id="${vidId}"></video>
+              <div class="overlay">
+                <button class="play-btn" onclick="playVideo('${vidId}')">▶️</button>
+                <div class="meta">
+                  <span>👁 2.4K</span>
+                  <span>❤️ 120</span>
+                  <span>💬 35</span>
+                </div>
+              </div>
+              <div class="controls">
+                <button onclick="document.getElementById('${vidId}').currentTime -= 3">⏪ 3s</button>
+                <button onclick="document.getElementById('${vidId}').currentTime += 5">⏩ 5s</button>
+              </div>
+            </div>
+            <h3>${video.title}</h3>
+          </div>
+        `;
+      });
+    </script>
   </div>
 
   <script>
-    const searchInput = document.getElementById('searchInput');
-    const cards = document.querySelectorAll('.card');
+    function playVideo(id) {
+      const video = document.getElementById(id);
+      video.play();
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      }
+    }
 
+    const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase();
-      cards.forEach(card => {
+      document.querySelectorAll('.card').forEach(card => {
         const title = card.querySelector('h3').textContent.toLowerCase();
         card.style.display = title.includes(query) ? 'block' : 'none';
       });
