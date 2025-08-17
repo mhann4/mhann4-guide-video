@@ -133,7 +133,7 @@
 
   <div class="section-title">🎞️ Guide Videos</div>
   <div class="grid" id="videoGrid">
-    <!-- Cards with thumbnails and click logic -->
+    <!-- Cards will be injected by JS -->
   </div>
 
   <div class="modal" id="videoModal">
@@ -145,16 +145,16 @@
 
   <script>
     const videoData = [
-      { title: "App and bonus", thumb: "1Ok1OK4hpeBYlqfrdXHoCIEdxDeesijfI", video: "1P5Aa179THk-2qIDFp8KsSmVJoY3eHRtw" },
-      { title: "Friday bonus", thumb: "1OxLtkpz1xi5Gjv2p4M0VYkKQB1H7k0zv", video: "1PJvASoJ0s1y2vtDe8cJXmODyUyeRfMVA" },
-      { title: "Ga ချိတ်/ဖြုတ်", thumb: "1_f9pbqhhUUeBT90TJWEBVOp_b5Ocmnfp", video: "1RLdxOGoxLiA3DdNr19S68MnI3aqPsSgj" },
-      { title: "Hyper Bonus", thumb: "1PzUFO0f8uHSCO9tiaakrkS1LAkMgjTiD", video: "1PEvsEFe12HjtBaEgrk67qoaAhZojuGVN" },
-      { title: "Monday bonus", thumb: "1OwmQNjlzGaP9v8NwHgDelfSPkQ0iYRY0", video: "1PQY4wSjIQRjt0q7gkK0Tm3YC0AANRPHf" },
-      { title: "System bet", thumb: "1OXRCMxuuhUzQTV0LpCZbruc5c-4KOANz", video: "1P4AVEKKQr4EFczBFFToGet3LKDuLVOn-" },
-      { title: "Top bins", thumb: "1OwPJ-p4LXPMl-G68K-fXH3KHJj7RIIGz", video: "1PHbk8t2aw-Hc_785Ster9hpqlpNw61wz" },
-      { title: "X2 Wednesday promotion", thumb: "1OlLacnN55x3lIVnxfuHvjjC8j-KXVC6Y", video: "1PDyQ94yAkFBbNk-qm9PbrhGBKZQPXr7f" },
-      { title: "How to Sign up?", thumb: "1P3o_GOGiXZPRpUVFfbIPLfZQWzJHyctf", video: "1PQxDktomqsfwg4T0uiAdi1RtAleloBSy" },
-      { title: "Loboki Bet Builder", thumb: "10MZPYSyle1TCcjbM3He12BjUWxp8Ednr", video: "10USKQYSCAnizbQcu88XJbnd8GAvcDho2" }
+      { title: "App and bonus", thumb: "app-and-bonus.png", video: "1P5Aa179THk-2qIDFp8KsSmVJoY3eHRtw" },
+      { title: "Friday bonus", thumb: "friday-bonus.png", video: "1PJvASoJ0s1y2vtDe8cJXmODyUyeRfMVA" },
+      { title: "Ga ချိတ်/ဖြုတ်", thumb: "ga-setup-remove.png", video: "1RLdxOGoxLiA3DdNr19S68MnI3aqPsSgj" },
+      { title: "Hyper Bonus", thumb: "hyper-bonus.png", video: "1PEvsEFe12HjtBaEgrk67qoaAhZojuGVN" },
+      { title: "Monday bonus", thumb: "monday-bonus.png", video: "1PQY4wSjIQRjt0q7gkK0Tm3YC0AANRPHf" },
+      { title: "System bet", thumb: "system-bet.png", video: "1P4AVEKKQr4EFczBFFToGet3LKDuLVOn-" },
+      { title: "Top bins", thumb: "top-bins.png", video: "1PHbk8t2aw-Hc_785Ster9hpqlpNw61wz" },
+      { title: "X2 Wednesday promotion", thumb: "x2-wednesday-promo.png", video: "1PDyQ94yAkFBbNk-qm9PbrhGBKZQPXr7f" },
+      { title: "How to Sign up?", thumb: "how-to-sign-up.png", video: "1PQxDktomqsfwg4T0uiAdi1RtAleloBSy" },
+      { title: "Loboki Bet Builder", thumb: "loboki-bet-builder.png", video: "10USKQYSCAnizbQcu88XJbnd8GAvcDho2" }
     ];
 
     const grid = document.getElementById('videoGrid');
@@ -162,7 +162,7 @@
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
-        <img src="https://drive.google.com/uc?export=view&id=${item.thumb}" alt="${item.title}" />
+        <img src="images/${item.thumb}" alt="${item.title}" />
         <h3>${item.title}</h3>
       `;
       card.onclick = () => openModal(item.video);
