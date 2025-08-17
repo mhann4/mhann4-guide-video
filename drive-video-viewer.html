@@ -3,25 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mhann4 Guide Videos</title> <!-- ✅ Title changed -->
+  <title>Mhann4 Guide Videos</title>
   <style>
     body {
       margin: 0;
       font-family: sans-serif;
       background-color: #111;
       color: #fff;
-      padding: 20px;
+      padding-bottom: 80px; /* space for bottom nav */
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin: 20px 0 10px;
+      font-size: 1.5rem;
+    }
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      padding: 10px 20px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .promo-banner {
+      background-color: #c00;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      margin: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .section-title {
+      margin: 20px 20px 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* Always 3-cols */
-      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      padding: 0 20px;
     }
 
     .card {
@@ -33,14 +66,37 @@
 
     .card h3 {
       margin: 10px 0;
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .card iframe {
       width: 100%;
-      height: 200px;
+      height: 150px;
       border: none;
       border-radius: 4px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #222;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 1px solid #444;
+    }
+
+    .bottom-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .bottom-nav a:hover {
+      color: #0f0;
     }
 
     html, body {
@@ -49,7 +105,18 @@
   </style>
 </head>
 <body>
-  <h1>Mhann4 Guide Videos</h1> <!-- ✅ Heading changed -->
+
+  <h1>Mhann4 Guide Videos</h1>
+
+  <div class="search-bar">
+    <input type="text" placeholder="ရှာဖွေပါ..." />
+  </div>
+
+  <div class="promo-banner">
+    Bioscope App Premium Member အတွက် ၄ ရက်အထူးပရိုမိုးရှင်း!
+  </div>
+
+  <div class="section-title">🎞️ Guide Videos</div>
   <div class="grid">
 
     <div class="card">
@@ -103,5 +170,13 @@
     </div>
 
   </div>
+
+  <nav class="bottom-nav">
+    <a href="#">🏠 Home</a>
+    <a href="#">🎬 Movies</a>
+    <a href="#">🎞️ Reels</a>
+    <a href="#">👤 Profile</a>
+  </nav>
+
 </body>
 </html>
