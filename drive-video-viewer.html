@@ -20,20 +20,8 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 1fr); /* Always 3-cols */
       gap: 20px;
-    }
-
-    @media (max-width: 900px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
     }
 
     .card {
@@ -53,6 +41,11 @@
       height: 200px;
       border: none;
       border-radius: 4px;
+    }
+
+    /* Optional: Make sure page scrolls vertically */
+    html, body {
+      overflow-x: hidden;
     }
   </style>
 </head>
