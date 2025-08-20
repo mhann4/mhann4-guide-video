@@ -15,13 +15,35 @@
       min-height: 100vh;
     }
 
+    /* Nav */
     nav {
       background: #000;
       padding: 10px 20px;
       display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .menu-toggle {
+      display: none; /* will show on mobile */
+      font-size: 1.6rem;
+      color: #fff;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #333;
+      border: none;
+      transition: background 0.2s;
+    }
+    .menu-toggle:hover { background: #555; }
+
+    .menu-list {
+      display: flex;
       flex-wrap: wrap;
       gap: 15px;
       justify-content: center;
+      width: 100%;
     }
 
     .menu-item {
@@ -32,18 +54,18 @@
       background: #222;
       cursor: pointer;
       transition: background 0.2s;
+      text-align: center;
     }
+    .menu-item:hover { background: #444; }
 
-    .menu-item:hover {
-      background: #444;
-    }
-
+    /* Heading */
     h1 {
       text-align: center;
       margin: 20px 0 10px;
       font-size: 1.5rem;
     }
 
+    /* Search */
     .search-bar {
       display: flex;
       justify-content: center;
@@ -59,6 +81,7 @@
       font-size: 1rem;
     }
 
+    /* Promo */
     .promo-banner {
       background-color: #c00;
       color: #fff;
@@ -75,6 +98,7 @@
       font-weight: bold;
     }
 
+    /* Grid */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -90,10 +114,7 @@
       cursor: pointer;
       transition: transform 0.2s;
     }
-
-    .card:hover {
-      transform: scale(1.03);
-    }
+    .card:hover { transform: scale(1.03); }
 
     .card img {
       width: 100%;
@@ -108,6 +129,7 @@
       text-align: center;
     }
 
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -143,17 +165,39 @@
       cursor: pointer;
       margin-bottom: 5px;
     }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      nav { justify-content: space-between; }
+      .menu-toggle { display: inline-block; }
+      .menu-list {
+        display: none;       /* collapsed by default on mobile */
+        flex-direction: column;
+        width: 100%;
+        margin-top: 8px;
+      }
+      nav.open .menu-list { display: flex; } /* show when toggled */
+      .menu-item { width: 100%; }
+      .grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
   <nav>
-    <div class="menu-item">Football Live</div>
-    <div class="menu-item">Giveaway</div>
-    <div class="menu-item">All Videos</div>
-    <div class="menu-item">1xbet</div>
-    <div class="menu-item">Loboki</div>
-    <div class="menu-item">Contact</div>
+    <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navMenu" title="Menu">☰</button>
+    <div class="menu-list" id="navMenu">
+      <div class="menu-item">Football Live</div>
+      <div class="menu-item">Giveaway</div>
+      <div class="menu-item">All Videos</div>
+      <div class="menu-item">1xbet</div>
+      <div class="menu-item">Loboki</div>
+      <div class="menu-item">Contact</div>
+    </div>
   </nav>
 
   <h1>Mhann4 Guide Videos</h1>
@@ -167,18 +211,17 @@
   </div>
 
   <div class="section-title">🎞️ Guide Videos</div>
-  <div class="grid" id="videoGrid">
-    <!-- Cards will be injected by JS -->
-  </div>
+  <div class="grid" id="videoGrid"></div>
 
   <div class="modal" id="videoModal">
     <div class="modal-content">
-      <div class="close-btn" onclick="closeModal()">✖</div>
+      <div class="close-btn" id="modalClose">✖</div>
       <iframe id="videoFrame" src="" allowfullscreen></iframe>
     </div>
   </div>
 
   <script>
+    // Video data
     const videoData = [
       { title: "App and bonus", thumb: "images/app-and-bonus.png", video: "1P5Aa179THk-2qIDFp8KsSmVJoY3eHRtw" },
       { title: "Friday bonus", thumb: "images/friday-bonus.png", video: "1PJvASoJ0s1y2vtDe8cJXmODyUyeRfMVA" },
@@ -193,6 +236,7 @@
       { title: "Promo Codes", thumb: "images/promo-codes.png", video: "1c0eiqeuAFM3Wur1LBhcWAlC2XMxI2gE8" }
     ];
 
+    // Build grid
     const grid = document.getElementById('videoGrid');
     videoData.forEach(item => {
       const card = document.createElement('div');
@@ -201,24 +245,34 @@
         <img src="${item.thumb}" alt="${item.title}" />
         <h3>${item.title}</h3>
       `;
-      card.onclick = () => openModal(item.video);
+      card.addEventListener('click', () => openModal(item.video));
       grid.appendChild(card);
     });
 
+    // Modal controls
+    const modal = document.getElementById('videoModal');
+    const frame = document.getElementById('videoFrame');
+    const modalClose = document.getElementById('modalClose');
+
     function openModal(videoId) {
-      const modal = document.getElementById('videoModal');
-      const frame = document.getElementById('videoFrame');
       frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
       modal.style.display = 'flex';
     }
 
     function closeModal() {
-      const modal = document.getElementById('videoModal');
-      const frame = document.getElementById('videoFrame');
       frame.src = '';
       modal.style.display = 'none';
     }
 
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Search filter
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase();
@@ -226,6 +280,28 @@
         const title = card.querySelector('h3').textContent.toLowerCase();
         card.style.display = title.includes(query) ? 'block' : 'none';
       });
+    });
+
+    // Menu toggle (mobile)
+    const navEl = document.querySelector('nav');
+    const toggleBtn = document.querySelector('.menu-toggle');
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = navEl.classList.toggle('open');
+      toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close menu on outside click or Escape
+    document.addEventListener('click', (e) => {
+      if (!navEl.contains(e.target)) {
+        navEl.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        navEl.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
     });
   </script>
 
