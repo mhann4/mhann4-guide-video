@@ -12,7 +12,7 @@
       background-color: #111;
       color: #fff;
       overflow-x: hidden;
-      min-height: 100vh; /* ✅ Fix for scroll cutoff */
+      min-height: 100vh;
     }
 
     h1 {
@@ -148,16 +148,17 @@
 
   <script>
     const videoData = [
-      { title: "App and bonus", thumb: "images/app-and-bonus.png", video: "1P5Aa179THk-2qIDFp8KsSmVJoY3eHRtw" },
-      { title: "Friday bonus", thumb: "images/friday-bonus.png", video: "1PJvASoJ0s1y2vtDe8cJXmODyUyeRfMVA" },
-      { title: "Ga ချိတ်/ဖြုတ်", thumb: "images/ga-setup-remove.png", video: "1RLdxOGoxLiA3DdNr19S68MnI3aqPsSgj" },
-      { title: "Hyper Bonus", thumb: "images/hyper-bonus.png", video: "1PEvsEFe12HjtBaEgrk67qoaAhZojuGVN" },
-      { title: "Monday bonus", thumb: "images/monday-bonus.png", video: "1PQY4wSjIQRjt0q7gkK0Tm3YC0AANRPHf" },
-      { title: "System bet", thumb: "images/system-bet.png", video: "1P4AVEKKQr4EFczBFFToGet3LKDuLVOn-" },
-      { title: "Top bins", thumb: "images/top-bins.png", video: "1PHbk8t2aw-Hc_785Ster9hpqlpNw61wz" },
-      { title: "X2 Wednesday promotion", thumb: "images/x2-wednesday-promo.png", video: "1PDyQ94yAkFBbNk-qm9PbrhGBKZQPXr7f" },
-      { title: "How to Sign up?", thumb: "images/how-to-sign-up.png", video: "1PQxDktomqsfwg4T0uiAdi1RtAleloBSy" },
-      { title: "Loboki Bet Builder", thumb: "images/loboki-bet-builder.png", video: "10USKQYSCAnizbQcu88XJbnd8GAvcDho2" }
+      { title: "App and bonus", thumb: "images/app-and-bonus.png", video: "https://mega.nz/embed/uYcXCLiA#IwX2lGaezfocctlXrtt5xY_DsD7dzApv5LMF0pYRlXQ" },
+      { title: "Friday bonus", thumb: "images/friday-bonus.png", video: "https://mega.nz/embed/2VskhQwI#MjOgxrXZpz3lNkYgsxgAAhlq_QpOI_vsz94YZ_Asd1Q" },
+      { title: "Ga ချိတ်/ဖြုတ်", thumb: "images/ga-setup-remove.png", video: "https://mega.nz/embed/XcMGVBqA#gBQFnOJNQIkf3Dvo87wouzbFDP374M5shN8vHcyhu3U" },
+      { title: "Hyper Bonus", thumb: "images/hyper-bonus.png", video: "https://mega.nz/embed/rV91WTyC#3qw7VlXmoUGDQgkNtHluhuqci1QDlcf4-8Ik1HXAwq0" },
+      { title: "Monday bonus", thumb: "images/monday-bonus.png", video: "https://mega.nz/embed/7F11wAxB#6syvf5DqAMFbf1M05jf8L-1WYlNIi-l_UzRYeTruG1g" },
+      { title: "System bet", thumb: "images/system-bet.png", video: "https://mega.nz/embed/nBVlGaIC#lSWnHAmIrX1mAfauGG_P4F1OBdypApeYQFs16svwv9s" },
+      { title: "Top bins", thumb: "images/top-bins.png", video: "https://mega.nz/embed/GVUjmaLL#HPXRu-TDg--OWgu2vtSbOmMbpFLszz7NQbl5D6Us91w" },
+      { title: "X2 Wednesday promotion", thumb: "images/x2-wednesday-promo.png", video: "https://mega.nz/embed/WVdkQQLZ#YitdbFubXSGtfzMAUVFHzthsbyVeqetcjxKb7E9cCeQ" },
+      { title: "How to Sign up?", thumb: "images/how-to-sign-up.png", video: "https://mega.nz/embed/KIUTQAib#VV2GY7_jJQvGksnOOOa3Y17PABOfrJ-ZBluZO1xmthY" },
+      { title: "Promo Codes", thumb: "images/promo-codes.png", video: "https://mega.nz/embed/nBUSTDRB#9fTzwW62pTJedXiB5gkVTLkb77ESTmiHMCTpJmR4mUY" },
+      { title: "Loboki Bet Builder", thumb: "images/loboki-bet-builder.png", video: "https://mega.nz/embed/2BN1DSpB#MGLp8pxYJDxzqkvNhq4C76cPNI-jUa3OUFylhB_UHmo" }
     ];
 
     const grid = document.getElementById('videoGrid');
@@ -172,10 +173,10 @@
       grid.appendChild(card);
     });
 
-    function openModal(videoId) {
+    function openModal(videoLink) {
       const modal = document.getElementById('videoModal');
       const frame = document.getElementById('videoFrame');
-      frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+      frame.src = videoLink;
       modal.style.display = 'flex';
     }
 
