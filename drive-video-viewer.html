@@ -5,6 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mhann4 Guide Videos</title>
   <style>
+    /* A */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -240px;
+      width: 240px;
+      height: 100%;
+      background: #2e2e2e;
+      padding: 64px 20px 24px;
+      box-sizing: border-box;
+      transition: left 0.25s ease;
+      z-index: 1001;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar a {
+      display: block;
+      color: #ADD8E6;
+      font-size: 16px;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+    }
+    .overlay.active {
+      display: block;
+    }
+    /* End of A */
+
     html, body {
       margin: 0;
       padding: 0;
@@ -142,6 +177,16 @@
 </head>
 <body>
 
+  <nav class="sidebar" id="sidebar" aria-label="Main menu">
+    <a href="#">Football live</a>
+    <a href="#">Giveaway</a>
+    <a href="#">1xbet</a>
+    <a href="#">Loboki</a>
+    <a href="#">Contact</a>
+    <a href="#">Profile</a>
+  </nav>
+
+  <div class="overlay" id="overlay" onclick="toggleMenu()" aria-hidden="true"></div>
   <h1>Mhann4 Guide Videos</h1>
 
   <div class="search-bar">
@@ -155,8 +200,7 @@
 
   <div class="section-title">🎞️ Guide Videos</div>
   <div class="grid" id="videoGrid">
-    <!-- Cards will be injected by JS -->
-  </div>
+    </div>
 
   <div class="modal" id="videoModal">
     <div class="modal-content">
@@ -166,6 +210,17 @@
   </div>
 
   <script>
+    /* C */
+    const menuBtn = document.querySelector('.menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+    /* End of C */
+    
     const videoData = [
       { title: "App and bonus", thumb: "images/app-and-bonus.png", video: "1P5Aa179THk-2qIDFp8KsSmVJoY3eHRtw" },
       { title: "Friday bonus", thumb: "images/friday-bonus.png", video: "1PJvASoJ0s1y2vtDe8cJXmODyUyeRfMVA" },
@@ -215,6 +270,5 @@
       });
     });
   </script>
-
 </body>
 </html>
