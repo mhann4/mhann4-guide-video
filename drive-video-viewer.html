@@ -173,44 +173,11 @@
       cursor: pointer;
       margin-bottom: 5px;
     }
-
-    /* New Home Screen CSS */
-    .scroll-row {
-      display: flex;
-      overflow-x: auto;
-      gap: 12px;
-      padding: 10px 20px;
-      scroll-snap-type: x mandatory;
-    }
-    .scroll-row::-webkit-scrollbar {
-      height: 6px;
-    }
-    .scroll-row::-webkit-scrollbar-thumb {
-      background: #444;
-      border-radius: 3px;
-    }
-    .scroll-row .card {
-      flex: 0 0 auto;
-      width: 160px;
-      scroll-snap-align: start;
-    }
-    .more-link {
-      color: #ADD8E6;
-      text-align: right;
-      padding: 0 20px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    /* Hide the full grid on the home page initially */
-    .grid {
-      display: none;
-    }
   </style>
 </head>
 <body>
 
   <nav class="sidebar" id="sidebar" aria-label="Main menu">
-    <a href="#" onclick="showHomeScreen()">Home</a>
     <a href="#">Football live</a>
     <a href="#">Giveaway</a>
     <a href="#">1xbet</a>
@@ -221,10 +188,10 @@
 
   <div class="overlay" id="overlay" onclick="toggleMenu()" aria-hidden="true"></div>
   
-  <div id="homeScreen">
-    <h1>Home</h1>
+  <div class="content">
+    <h1>Mhann4 Guide Videos</h1>
     <div class="search-bar">
-      <button class="menu-toggle" aria-label="Menu">☰</button>
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
       <input type="text" id="searchInput" placeholder="ရှာဖွေပါ..." />
     </div>
 
@@ -232,22 +199,6 @@
       Telegram <strong>@mhann4</strong> ၊ Viber <strong>09768874554</strong> သို့ ဆက်သွယ် ဆော့ကစားနိုင်ပါသည်။
     </div>
 
-    <div class="section-title">🎯 1xbet</div>
-    <div class="scroll-row" id="xbetVideos">
-      </div>
-    <div class="more-link" onclick="showFullSection('1xbet')">More →</div>
-
-    <div class="section-title">🧠 Loboki</div>
-    <div class="scroll-row" id="lobokiVideos">
-      </div>
-    <div class="more-link" onclick="showFullSection('loboki')">More →</div>
-  </div>
-  
-  <div id="fullScreen" style="display:none;">
-    <h1 id="sectionTitle"></h1>
-    <div class="search-bar">
-      <input type="text" id="fullScreenSearchInput" placeholder="ရှာဖွေပါ..." />
-    </div>
     <div class="grid" id="videoGrid">
       </div>
   </div>
@@ -260,39 +211,6 @@
   </div>
 
   <script>
-    const menuBtn = document.querySelector('.menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    const grid = document.getElementById('videoGrid');
-    const homeScreen = document.getElementById('homeScreen');
-    const fullScreen = document.getElementById('fullScreen');
-    const sectionTitle = document.getElementById('sectionTitle');
-    const searchInput = document.getElementById('searchInput');
-    const fullScreenSearchInput = document.getElementById('fullScreenSearchInput');
-
-    function toggleMenu() {
-      const isActive = sidebar.classList.contains('active');
-      if (!isActive) {
-        history.pushState({ sidebarOpen: true }, '');
-      }
-      sidebar.classList.toggle('active');
-      overlay.classList.toggle('active');
-    }
-    
-    menuBtn.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', toggleMenu);
-    
-    window.addEventListener('popstate', () => {
-      if (sidebar.classList.contains('active')) {
-        sidebar.classList.remove('active');
-        overlay.classList.remove('active');
-      }
-      // Revert to home screen on back button press
-      if (history.state && history.state.fullScreen) {
-        showHomeScreen();
-      }
-    });
-    
     const videoData = [
       { title: "App and bonus", thumb: "images/app-and-bonus.png", video: "1P5Aa179THk-2qIDFp8KsSmVJoY3eHRtw" },
       { title: "Friday bonus", thumb: "images/friday-bonus.png", video: "1PJvASoJ0s1y2vtDe8cJXmODyUyeRfMVA" },
@@ -307,63 +225,27 @@
       { title: "Promo Codes", thumb: "images/promo-codes.png", video: "1c0eiqeuAFM3Wur1LBhcWAlC2XMxI2gE8" }
     ];
 
-    const videoGroups = {
-      "1xbet": [
-        "App and bonus", "Friday bonus", "Ga ချိတ်/ဖြုတ်", "Hyper Bonus",
-        "Monday bonus", "System bet", "Top bins", "X2 Wednesday promotion",
-        "How to Sign up?", "Promo Codes"
-      ],
-      "loboki": ["Loboki Bet Builder"]
-    };
+    const searchInput = document.getElementById('searchInput');
+    const videoGrid = document.getElementById('videoGrid');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
 
-    function renderVideos() {
-      const xbetRow = document.getElementById('xbetVideos');
-      const lobokiRow = document.getElementById('lobokiVideos');
-      xbetRow.innerHTML = '';
-      lobokiRow.innerHTML = '';
-
-      videoData.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `<img src="${item.thumb}" alt="${item.title}" /><h3>${item.title}</h3>`;
-        card.onclick = () => openModal(item.video);
-        
-        if (videoGroups["1xbet"].includes(item.title)) {
-          xbetRow.appendChild(card);
-        } else if (videoGroups["loboki"].includes(item.title)) {
-          lobokiRow.appendChild(card);
-        }
-      });
-    }
-
-    function showFullSection(section) {
-      history.pushState({ fullScreen: true, section: section }, '', `#${section}`);
-      homeScreen.style.display = 'none';
-      fullScreen.style.display = 'block';
-      sectionTitle.textContent = section === '1xbet' ? '1xbet Videos' : 'Loboki Videos';
-      grid.innerHTML = '';
-      
-      videoData.forEach(item => {
-        if (videoGroups[section].includes(item.title)) {
+    function renderVideos(filteredVideos) {
+      videoGrid.innerHTML = '';
+      if (filteredVideos.length > 0) {
+        filteredVideos.forEach(item => {
           const card = document.createElement('div');
           card.className = 'card';
-          card.innerHTML = `<img src="${item.thumb}" alt="${item.title}" /><h3>${item.title}</h3>`;
+          card.innerHTML = `
+            <img src="${item.thumb}" alt="${item.title}" />
+            <h3>${item.title}</h3>
+          `;
           card.onclick = () => openModal(item.video);
-          grid.appendChild(card);
-        }
-      });
-      // Clear and focus the full screen search bar
-      fullScreenSearchInput.value = '';
-      fullScreenSearchInput.focus();
-    }
-
-    function showHomeScreen() {
-      history.pushState({}, '', ''); // Clean the URL hash
-      homeScreen.style.display = 'block';
-      fullScreen.style.display = 'none';
-      grid.innerHTML = '';
-      renderVideos();
-      searchInput.value = ''; // Clear search bar when returning home
+          videoGrid.appendChild(card);
+        });
+      } else {
+        videoGrid.innerHTML = `<p style="text-align:center; margin-top: 50px;">No videos found matching your search.</p>`;
+      }
     }
 
     function openModal(videoId) {
@@ -380,37 +262,19 @@
       modal.style.display = 'none';
     }
 
-    // Attach the live search listener to the full screen search bar
-    fullScreenSearchInput.addEventListener('input', () => {
-      const query = fullScreenSearchInput.value.toLowerCase();
-      const cards = grid.querySelectorAll('.card');
-      
-      cards.forEach(card => {
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        if (title.includes(query)) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
+    function toggleMenu() {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    }
 
-    // The home screen search input will only show the full grid, it will not filter
     searchInput.addEventListener('input', () => {
-      const query = searchInput.value;
-      if (query.length > 0) {
-        showFullSection('1xbet'); // Show 1xbet as a default when searching from home
-        fullScreenSearchInput.value = query; // Copy query to new search bar
-        fullScreenSearchInput.focus(); // Focus the new search bar
-        // Manually trigger the filter function for the new search bar
-        const event = new Event('input');
-        fullScreenSearchInput.dispatchEvent(event);
-      } else {
-        showHomeScreen();
-      }
+      const query = searchInput.value.toLowerCase();
+      const filteredVideos = videoData.filter(item => item.title.toLowerCase().includes(query));
+      renderVideos(filteredVideos);
     });
 
-    renderVideos();
+    // Initial render of all videos
+    renderVideos(videoData);
   </script>
 </body>
 </html>
