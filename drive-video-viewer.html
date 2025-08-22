@@ -245,6 +245,9 @@
   
   <div id="fullScreen" style="display:none;">
     <h1 id="sectionTitle"></h1>
+    <div class="search-bar">
+      <input type="text" id="fullScreenSearchInput" placeholder="ရှာဖွေပါ..." />
+    </div>
     <div class="grid" id="videoGrid">
       </div>
   </div>
@@ -265,6 +268,7 @@
     const fullScreen = document.getElementById('fullScreen');
     const sectionTitle = document.getElementById('sectionTitle');
     const searchInput = document.getElementById('searchInput');
+    const fullScreenSearchInput = document.getElementById('fullScreenSearchInput');
 
     function toggleMenu() {
       const isActive = sidebar.classList.contains('active');
@@ -348,6 +352,9 @@
           grid.appendChild(card);
         }
       });
+      // Clear and focus the full screen search bar
+      fullScreenSearchInput.value = '';
+      fullScreenSearchInput.focus();
     }
 
     function showHomeScreen() {
@@ -373,34 +380,31 @@
       modal.style.display = 'none';
     }
 
-    // This function will render all videos and filter based on search query
-    function renderAndFilterVideos(query) {
-      // First, show the full screen with all videos
-      homeScreen.style.display = 'none';
-      fullScreen.style.display = 'block';
-      sectionTitle.textContent = `All Videos`;
-      grid.innerHTML = '';
+    // Attach the live search listener to the full screen search bar
+    fullScreenSearchInput.addEventListener('input', () => {
+      const query = fullScreenSearchInput.value.toLowerCase();
+      const cards = grid.querySelectorAll('.card');
       
-      const filteredVideos = videoData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-      
-      if (filteredVideos.length > 0) {
-        filteredVideos.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = `<img src="${item.thumb}" alt="${item.title}" /><h3>${item.title}</h3>`;
-          card.onclick = () => openModal(item.video);
-          grid.appendChild(card);
-        });
-      } else {
-        grid.innerHTML = `<p style="text-align:center; margin-top: 50px;">No videos found matching your search.</p>`;
-      }
-    }
-    
-    // Attach the live search listener
+      cards.forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        if (title.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // The home screen search input will only show the full grid, it will not filter
     searchInput.addEventListener('input', () => {
       const query = searchInput.value;
       if (query.length > 0) {
-        renderAndFilterVideos(query);
+        showFullSection('1xbet'); // Show 1xbet as a default when searching from home
+        fullScreenSearchInput.value = query; // Copy query to new search bar
+        fullScreenSearchInput.focus(); // Focus the new search bar
+        // Manually trigger the filter function for the new search bar
+        const event = new Event('input');
+        fullScreenSearchInput.dispatchEvent(event);
       } else {
         showHomeScreen();
       }
