@@ -375,12 +375,12 @@
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase();
       
-      // If search query is not empty, show the full screen and filter videos
       if (query.length > 0) {
+        // Show the full screen with all videos
         homeScreen.style.display = 'none';
         fullScreen.style.display = 'block';
         sectionTitle.textContent = `Search results for "${query}"`;
-        grid.innerHTML = ''; // Clear existing videos
+        grid.innerHTML = '';
 
         let foundVideos = videoData.filter(item => item.title.toLowerCase().includes(query));
 
@@ -395,7 +395,6 @@
         } else {
           grid.innerHTML = `<p style="text-align:center; margin-top: 50px;">No videos found.</p>`;
         }
-        
       } else {
         // If search bar is empty, show the home screen again
         showHomeScreen();
