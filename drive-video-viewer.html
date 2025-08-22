@@ -264,7 +264,8 @@
     const homeScreen = document.getElementById('homeScreen');
     const fullScreen = document.getElementById('fullScreen');
     const sectionTitle = document.getElementById('sectionTitle');
-    
+    const searchInput = document.getElementById('searchInput');
+
     function toggleMenu() {
       const isActive = sidebar.classList.contains('active');
       if (!isActive) {
@@ -355,6 +356,7 @@
       fullScreen.style.display = 'none';
       grid.innerHTML = '';
       renderVideos();
+      searchInput.value = ''; // Clear search bar when returning home
     }
 
     function openModal(videoId) {
@@ -371,32 +373,35 @@
       modal.style.display = 'none';
     }
 
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase();
+    // This function will render all videos and filter based on search query
+    function renderAndFilterVideos(query) {
+      // First, show the full screen with all videos
+      homeScreen.style.display = 'none';
+      fullScreen.style.display = 'block';
+      sectionTitle.textContent = `All Videos`;
+      grid.innerHTML = '';
       
-      if (query.length > 0) {
-        // Show the full screen with all videos
-        homeScreen.style.display = 'none';
-        fullScreen.style.display = 'block';
-        sectionTitle.textContent = `Search results for "${query}"`;
-        grid.innerHTML = '';
-
-        let foundVideos = videoData.filter(item => item.title.toLowerCase().includes(query));
-
-        if (foundVideos.length > 0) {
-          foundVideos.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `<img src="${item.thumb}" alt="${item.title}" /><h3>${item.title}</h3>`;
-            card.onclick = () => openModal(item.video);
-            grid.appendChild(card);
-          });
-        } else {
-          grid.innerHTML = `<p style="text-align:center; margin-top: 50px;">No videos found.</p>`;
-        }
+      const filteredVideos = videoData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+      
+      if (filteredVideos.length > 0) {
+        filteredVideos.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `<img src="${item.thumb}" alt="${item.title}" /><h3>${item.title}</h3>`;
+          card.onclick = () => openModal(item.video);
+          grid.appendChild(card);
+        });
       } else {
-        // If search bar is empty, show the home screen again
+        grid.innerHTML = `<p style="text-align:center; margin-top: 50px;">No videos found matching your search.</p>`;
+      }
+    }
+    
+    // Attach the live search listener
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value;
+      if (query.length > 0) {
+        renderAndFilterVideos(query);
+      } else {
         showHomeScreen();
       }
     });
