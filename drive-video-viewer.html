@@ -252,6 +252,7 @@
       const frame = document.getElementById('videoFrame');
       frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
       modal.style.display = 'flex';
+      history.pushState({ modalOpen: true }, '');
     }
 
     function closeModal() {
@@ -262,6 +263,10 @@
     }
 
     function toggleMenu() {
+      const isActive = sidebar.classList.contains('active');
+      if (!isActive) {
+        history.pushState({ sidebarOpen: true }, '');
+      }
       sidebar.classList.toggle('active');
       overlay.classList.toggle('active');
     }
@@ -269,6 +274,9 @@
     function showHomePage() {
       renderVideos(videoData);
       searchInput.value = '';
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+      history.pushState({}, '', '');
     }
 
     searchInput.addEventListener('input', () => {
@@ -276,9 +284,20 @@
       const filteredVideos = videoData.filter(item => item.title.toLowerCase().includes(query));
       renderVideos(filteredVideos);
     });
+    
+    window.addEventListener('popstate', (event) => {
+      if (event.state && event.state.modalOpen) {
+        // Modal was open, but back button was pressed. Don't close sidebar
+      } else if (sidebar.classList.contains('active')) {
+        toggleMenu();
+      } else {
+        closeModal();
+      }
+    });
 
     // Initial render of all videos
     renderVideos(videoData);
   </script>
 </body>
 </html>
+
