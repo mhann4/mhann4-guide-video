@@ -178,17 +178,16 @@
 <body>
 
   <nav class="sidebar" id="sidebar" aria-label="Main menu">
+    <a href="#" onclick="showHomePage()">Home</a>
     <a href="#">Football live</a>
     <a href="#">Giveaway</a>
-    <a href="#">1xbet</a>
-    <a href="#">Loboki</a>
     <a href="#">Contact</a>
     <a href="#">Profile</a>
   </nav>
 
   <div class="overlay" id="overlay" onclick="toggleMenu()" aria-hidden="true"></div>
   
-  <div class="content">
+  <div id="mainContent">
     <h1>Mhann4 Guide Videos</h1>
     <div class="search-bar">
       <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
@@ -265,6 +264,11 @@
     function toggleMenu() {
       sidebar.classList.toggle('active');
       overlay.classList.toggle('active');
+    }
+    
+    function showHomePage() {
+      renderVideos(videoData);
+      searchInput.value = '';
     }
 
     searchInput.addEventListener('input', () => {
