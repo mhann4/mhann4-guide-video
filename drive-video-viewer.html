@@ -337,7 +337,7 @@
       fullScreen.style.display = 'block';
       sectionTitle.textContent = section === '1xbet' ? '1xbet Videos' : 'Loboki Videos';
       grid.innerHTML = '';
-
+      
       videoData.forEach(item => {
         if (videoGroups[section].includes(item.title)) {
           const card = document.createElement('div');
@@ -374,10 +374,32 @@
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase();
-      document.querySelectorAll('#videoGrid .card').forEach(card => {
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        card.style.display = title.includes(query) ? 'block' : 'none';
-      });
+      
+      // If search query is not empty, show the full screen and filter videos
+      if (query.length > 0) {
+        homeScreen.style.display = 'none';
+        fullScreen.style.display = 'block';
+        sectionTitle.textContent = `Search results for "${query}"`;
+        grid.innerHTML = ''; // Clear existing videos
+
+        let foundVideos = videoData.filter(item => item.title.toLowerCase().includes(query));
+
+        if (foundVideos.length > 0) {
+          foundVideos.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `<img src="${item.thumb}" alt="${item.title}" /><h3>${item.title}</h3>`;
+            card.onclick = () => openModal(item.video);
+            grid.appendChild(card);
+          });
+        } else {
+          grid.innerHTML = `<p style="text-align:center; margin-top: 50px;">No videos found.</p>`;
+        }
+        
+      } else {
+        // If search bar is empty, show the home screen again
+        showHomeScreen();
+      }
     });
 
     renderVideos();
