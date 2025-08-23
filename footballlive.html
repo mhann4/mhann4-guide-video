@@ -18,6 +18,7 @@
       align-items: center;
       min-height: 100vh;
     }
+    
     /* Bold and red heading */
     h1 {
       color: #ff0000; /* Red color */
@@ -26,6 +27,7 @@
       margin-bottom: 20px;
       font-size: 1.5rem;
     }
+    
     .warning-container {
       background-color: #333;
       border: 2px solid #ffcc00;
@@ -38,72 +40,45 @@
       font-size: 48px;
       color: #ffcc00;
     }
+    h2 { /* Changed h1 to h2 to avoid conflict with the main heading */
+      color: #ffcc00;
+      margin-top: 10px;
+    }
     p {
       font-size: 1.1rem;
     }
+    
     .video-container {
       width: 100%;
       max-width: 500px;
       margin-bottom: 20px;
       position: relative;
     }
+    
     .video-container video {
-      width: 100%;
-      height: auto; /* Maintains the video's original aspect ratio */
+      width: 250px;
+      height: 250px;
       border-radius: 8px;
     }
-    .play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-      border: 2px solid white;
-      border-radius: 50%;
-      width: 80px;
-      height: 80px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      font-size: 40px;
-    }
+    
   </style>
 </head>
 <body>
+  
   <h1>Football Live</h1>
-
+  
   <div class="video-container">
-    <video id="serverVideo" loop muted playsinline>
+    <video autoplay loop muted>
       <source src="fixing-server.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
-    <div class="play-button" id="playButton" style="display: none;">▶️</div>
   </div>
-
+  
   <div class="warning-container">
     <div class="warning-icon">⚠️</div>
-    <h1>Server ပြင်ဆင်နေသည်...</h1>
+    <h2>Server ပြင်ဆင်နေသည်...</h2>
     <p>နောက်မှ ပြန်လည်ကြိုးစားပေးပါခင်ဗျာ။</p>
   </div>
 
-  <script>
-    const video = document.getElementById('serverVideo');
-    const playButton = document.getElementById('playButton');
-
-    // Attempt to play the video automatically
-    video.play().catch(error => {
-      // If autoplay fails, show the play button
-      console.log('Autoplay was prevented, showing play button.');
-      playButton.style.display = 'flex';
-    });
-
-    // Handle play button click
-    playButton.addEventListener('click', () => {
-      video.play();
-      playButton.style.display = 'none';
-    });
-  </script>
 </body>
 </html>
