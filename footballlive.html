@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Football Live</title>
   <style>
-    /* Styles for the sidebar and overlay, copied from main file */
+    /* Styles for the sidebar and overlay */
     .sidebar {
       position: fixed;
       top: 0;
@@ -148,34 +148,41 @@
   </div>
 
   <script>
-    // Load menu.html and add menu functionality after the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('menu.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('menu-placeholder').innerHTML = data;
+    // Global variables for menu elements
+    let sidebar;
+    let overlay;
+
+    // Fetch and inject menu content as soon as the script is parsed
+    fetch('menu.html')
+      .then(response => response.text())
+      .then(data => {
+        const placeholder = document.getElementById('menu-placeholder');
+        if (placeholder) {
+          placeholder.innerHTML = data;
           
-          const sidebar = document.getElementById('sidebar');
-          const overlay = document.getElementById('overlay');
-      
-          function toggleMenu() {
-            const isActive = sidebar.classList.contains('active');
-            if (!isActive) {
-              history.pushState({ sidebarOpen: true }, '');
-            }
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-          }
-      
-          window.toggleMenu = toggleMenu;
-      
+          // Get the elements after they have been added to the DOM
+          sidebar = document.getElementById('sidebar');
+          overlay = document.getElementById('overlay');
+
+          // Event listeners for popstate
           window.addEventListener('popstate', (event) => {
-            if (sidebar.classList.contains('active')) {
+            if (sidebar && sidebar.classList.contains('active')) {
               toggleMenu();
             }
           });
-        });
-    });
+        }
+      });
+      
+    // Function that can be called from the HTML, regardless of load state
+    function toggleMenu() {
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      } else {
+        console.error("Sidebar or Overlay not found.");
+      }
+    }
+    
   </script>
 
 </body>
