@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Football Live</title>
   <style>
+    /* Styles for the main page and sidebar */
     body {
       background-color: #111;
       color: #fff;
       font-family: sans-serif;
       text-align: center;
-      padding: 20px;
+      padding: 0;
       margin: 0;
       display: flex;
       flex-direction: column;
@@ -18,19 +19,52 @@
       align-items: center;
       min-height: 100vh;
     }
+
+    /* Styles for the sidebar and overlay, copied from main file */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -240px;
+      width: 240px;
+      height: 100%;
+      background: #2e2e2e;
+      padding: 64px 20px 24px;
+      box-sizing: border-box;
+      transition: left 0.25s ease;
+      z-index: 1001;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar a {
+      display: block;
+      color: #ADD8E6;
+      font-size: 16px;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+    }
+    .overlay.active {
+      display: block;
+    }
     
-    /* New ad banner CSS */
     .ad-banner {
-        background-color: #ff9800; /* Yellow-orange color for the banner */
-        color: #333; /* Dark text color */
+        background-color: #ff9800;
+        color: #333;
         padding: 10px;
         margin-bottom: 20px;
         font-weight: bold;
     }
     
     h1 {
-      color: #ff0000; /* Red color */
-      font-weight: bold; /* Bold text */
+      color: #ff0000;
+      font-weight: bold;
       text-align: center;
       margin-bottom: 20px;
       font-size: 1.5rem;
@@ -68,11 +102,42 @@
       height: 250px;
       border-radius: 8px;
     }
+
+    .menu-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+      font-size: 1.4rem;
+      color: #fff;
+      background: #333;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+    }
     
   </style>
 </head>
 <body>
   
+  <a href="#" onclick="toggleMenu()" class="menu-button">☰</a>
+
+  <nav class="sidebar" id="sidebar" aria-label="Main menu">
+    <a href="drive-video-viewer.html">Home</a>
+    <a href="#" onclick="toggleMenu()">Football live</a>
+    <a href="drive-video-viewer.html">Giveaway</a>
+    <a href="drive-video-viewer.html">Contact</a>
+    <a href="drive-video-viewer.html">Profile</a>
+  </nav>
+
+  <div class="overlay" id="overlay" onclick="toggleMenu()" aria-hidden="true"></div>
+
   <div class="ad-banner">
     1xbet, Loboki, 555mix တို့ကို Mhnn4 ဆီမှာ လာရောက် ဆော့ကစားနိုင်ပါသည်။
   </div>
@@ -91,6 +156,27 @@
     <h2>Server ပြင်ဆင်နေသည်...</h2>
     <p>နောက်မှ ပြန်လည်ကြိုးစားပေးပါခင်ဗျာ။</p>
   </div>
+  
+  <script>
+    // Functions to handle the menu, copied from the main file
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    function toggleMenu() {
+      const isActive = sidebar.classList.contains('active');
+      if (!isActive) {
+        history.pushState({ sidebarOpen: true }, '');
+      }
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    }
+    
+    window.addEventListener('popstate', (event) => {
+      if (sidebar.classList.contains('active')) {
+        toggleMenu();
+      }
+    });
+  </script>
 
 </body>
 </html>
