@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mhann4 Guide Videos</title>
   <style>
-    /* Sidebar and Overlay CSS */
+    /* Styles for the sidebar and overlay */
     .sidebar {
       position: fixed;
       top: 0;
@@ -98,12 +98,6 @@
       border-radius: 8px;
       font-size: 0.95rem;
     }
-
-    .section-title {
-      margin: 20px 20px 10px;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
     
     .grid {
       display: grid;
@@ -177,15 +171,7 @@
 </head>
 <body>
 
-  <nav class="sidebar" id="sidebar" aria-label="Main menu">
-    <a href="#" onclick="showHomePage()">Home</a>
-    <a href="footballlive.html">Football live</a>
-    <a href="#">Giveaway</a>
-    <a href="#">Contact</a>
-    <a href="#">Profile</a>
-  </nav>
-
-  <div class="overlay" id="overlay" onclick="toggleMenu()" aria-hidden="true"></div>
+  <div id="menu-placeholder"></div>
   
   <div id="mainContent">
     <h1>Mhann4 Guide Videos</h1>
@@ -210,11 +196,41 @@
   </div>
 
   <script>
+    // Load menu.html and add menu functionality
+    fetch('menu.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('menu-placeholder').innerHTML = data;
+        
+        // Add menu functionality
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+    
+        function toggleMenu() {
+          const isActive = sidebar.classList.contains('active');
+          if (!isActive) {
+            history.pushState({ sidebarOpen: true }, '');
+          }
+          sidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+        }
+    
+        // Add the function to the global scope so it can be called from the HTML
+        window.toggleMenu = toggleMenu;
+    
+        window.addEventListener('popstate', (event) => {
+          if (sidebar.classList.contains('active')) {
+            toggleMenu();
+          }
+        });
+      });
+
+    // Original video data and functions
     const videoData = [
       { title: "App and bonus", thumb: "images/app-and-bonus.png", video: "1P5Aa179THk-2qIDFp8KsSmVJoY3eHRtw" },
       { title: "Friday bonus", thumb: "images/friday-bonus.png", video: "1PJvASoJ0s1y2vtDe8cJXmODyUyeRfMVA" },
       { title: "Ga ချိတ်/ဖြုတ်", thumb: "images/ga-setup-remove.png", video: "1RLdxOGoxLiA3DdNr19S68MnI3aqPsSgj" },
-      { title: "Hyper Bonus", thumb: "images/hyper-bonus.png", video: "1PEvsEFe12HjtBaEgrk67qoaAhZojuGVN" },
+      { title: "Hyper Bonus", thumb: "images/hyper-bonus.png", video: "1PEvsEfe12HjtBaEgrk67qoaAhZojuGVN" },
       { title: "Monday bonus", thumb: "images/monday-bonus.png", video: "1PQY4wSjIQRjt0q7gkK0Tm3YC0AANRPHf" },
       { title: "System bet", thumb: "images/system-bet.png", video: "1P4AVEKKQr4EFczBFFToGet3LKDuLVOn-" },
       { title: "Top bins", thumb: "images/top-bins.png", video: "1PHbk8t2aw-Hc_785Ster9hpqlpNw61wz" },
@@ -226,8 +242,6 @@
 
     const searchInput = document.getElementById('searchInput');
     const videoGrid = document.getElementById('videoGrid');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
 
     function renderVideos(filteredVideos) {
       videoGrid.innerHTML = '';
@@ -262,21 +276,9 @@
       modal.style.display = 'none';
     }
 
-    function toggleMenu() {
-      const isActive = sidebar.classList.contains('active');
-      if (!isActive) {
-        history.pushState({ sidebarOpen: true }, '');
-      }
-      sidebar.classList.toggle('active');
-      overlay.classList.toggle('active');
-    }
-    
     function showHomePage() {
       renderVideos(videoData);
       searchInput.value = '';
-      sidebar.classList.remove('active');
-      overlay.classList.remove('active');
-      history.pushState({}, '', '');
     }
 
     searchInput.addEventListener('input', () => {
@@ -285,16 +287,6 @@
       renderVideos(filteredVideos);
     });
     
-    window.addEventListener('popstate', (event) => {
-      if (event.state && event.state.modalOpen) {
-        // Modal was open, but back button was pressed. Don't close sidebar
-      } else if (sidebar.classList.contains('active')) {
-        toggleMenu();
-      } else {
-        closeModal();
-      }
-    });
-
     // Initial render of all videos
     renderVideos(videoData);
   </script>
