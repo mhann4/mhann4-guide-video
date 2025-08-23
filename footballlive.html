@@ -103,7 +103,7 @@
     }
     
     .menu-button {
-      position: absolute;
+      position: fixed;
       top: 10px;
       left: 10px;
       z-index: 10;
@@ -148,34 +148,34 @@
   </div>
 
   <script>
-    // Load menu.html and add menu functionality
-    fetch('menu.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('menu-placeholder').innerHTML = data;
-        
-        // Add menu functionality
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-    
-        function toggleMenu() {
-          const isActive = sidebar.classList.contains('active');
-          if (!isActive) {
-            history.pushState({ sidebarOpen: true }, '');
+    // Load menu.html and add menu functionality after the page has fully loaded
+    window.addEventListener('load', () => {
+      fetch('menu.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('menu-placeholder').innerHTML = data;
+          
+          const sidebar = document.getElementById('sidebar');
+          const overlay = document.getElementById('overlay');
+      
+          function toggleMenu() {
+            const isActive = sidebar.classList.contains('active');
+            if (!isActive) {
+              history.pushState({ sidebarOpen: true }, '');
+            }
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
           }
-          sidebar.classList.toggle('active');
-          overlay.classList.toggle('active');
-        }
-    
-        // Add the function to the global scope so it can be called from the HTML
-        window.toggleMenu = toggleMenu;
-    
-        window.addEventListener('popstate', (event) => {
-          if (sidebar.classList.contains('active')) {
-            toggleMenu();
-          }
+      
+          window.toggleMenu = toggleMenu;
+      
+          window.addEventListener('popstate', (event) => {
+            if (sidebar.classList.contains('active')) {
+              toggleMenu();
+            }
+          });
         });
-      });
+    });
   </script>
 
 </body>
