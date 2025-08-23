@@ -5,22 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Football Live</title>
   <style>
-    /* Styles for the main page and sidebar */
-    body {
-      background-color: #111;
-      color: #fff;
-      font-family: sans-serif;
-      text-align: center;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    /* Styles for the sidebar and overlay, copied from main file */
+    /* Styles for the sidebar and overlay */
     .sidebar {
       position: fixed;
       top: 0;
@@ -52,6 +37,20 @@
     }
     .overlay.active {
       display: block;
+    }
+    
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
     
     .ad-banner {
@@ -102,9 +101,9 @@
       height: 250px;
       border-radius: 8px;
     }
-
+    
     .menu-button {
-      position: fixed;
+      position: absolute;
       top: 10px;
       left: 10px;
       z-index: 10;
@@ -121,22 +120,13 @@
       align-items: center;
       text-decoration: none;
     }
-    
   </style>
 </head>
 <body>
   
   <a href="#" onclick="toggleMenu()" class="menu-button">☰</a>
 
-  <nav class="sidebar" id="sidebar" aria-label="Main menu">
-    <a href="drive-video-viewer.html">Home</a>
-    <a href="footballlive.html">Football live</a>
-    <a href="drive-video-viewer.html">Giveaway</a>
-    <a href="drive-video-viewer.html">Contact</a>
-    <a href="drive-video-viewer.html">Profile</a>
-  </nav>
-
-  <div class="overlay" id="overlay" onclick="toggleMenu()" aria-hidden="true"></div>
+  <div id="menu-placeholder"></div>
 
   <div class="ad-banner">
     1xbet, Loboki, 555mix တို့ကို Mhnn4 ဆီမှာ လာရောက် ဆော့ကစားနိုင်ပါသည်။
@@ -156,26 +146,36 @@
     <h2>Server ပြင်ဆင်နေသည်...</h2>
     <p>နောက်မှ ပြန်လည်ကြိုးစားပေးပါခင်ဗျာ။</p>
   </div>
-  
-  <script>
-    // Functions to handle the menu, copied from the main file
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
 
-    function toggleMenu() {
-      const isActive = sidebar.classList.contains('active');
-      if (!isActive) {
-        history.pushState({ sidebarOpen: true }, '');
-      }
-      sidebar.classList.toggle('active');
-      overlay.classList.toggle('active');
-    }
+  <script>
+    // Load menu.html and add menu functionality
+    fetch('menu.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('menu-placeholder').innerHTML = data;
+        
+        // Add menu functionality
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
     
-    window.addEventListener('popstate', (event) => {
-      if (sidebar.classList.contains('active')) {
-        toggleMenu();
-      }
-    });
+        function toggleMenu() {
+          const isActive = sidebar.classList.contains('active');
+          if (!isActive) {
+            history.pushState({ sidebarOpen: true }, '');
+          }
+          sidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+        }
+    
+        // Add the function to the global scope so it can be called from the HTML
+        window.toggleMenu = toggleMenu;
+    
+        window.addEventListener('popstate', (event) => {
+          if (sidebar.classList.contains('active')) {
+            toggleMenu();
+          }
+        });
+      });
   </script>
 
 </body>
