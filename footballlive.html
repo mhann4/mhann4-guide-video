@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Football Live</title>
   <style>
-    /* Styles for the sidebar and overlay */
+    /* Styles for the sidebar and overlay, copied from main file */
     .sidebar {
       position: fixed;
       top: 0;
@@ -148,8 +148,8 @@
   </div>
 
   <script>
-    // Load menu.html and add menu functionality after the page has fully loaded
-    window.addEventListener('load', () => {
+    // Load menu.html and add menu functionality after the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
       fetch('menu.html')
         .then(response => response.text())
         .then(data => {
