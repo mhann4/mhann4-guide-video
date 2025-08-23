@@ -11,15 +11,20 @@
       font-family: sans-serif;
       text-align: center;
       padding: 50px 20px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
     .warning-container {
       background-color: #333;
       border: 2px solid #ffcc00;
       border-radius: 8px;
       padding: 20px;
-      margin: 0 auto;
+      margin: 20px auto;
       max-width: 400px;
-      margin-top: 150px;
     }
     .warning-icon {
       font-size: 48px;
@@ -32,10 +37,24 @@
     p {
       font-size: 1.1rem;
     }
+    .video-container {
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+    .video-container video {
+      width: 100%;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
-
+  <div class="video-container">
+    <video autoplay loop muted>
+      <source src="fixing-server.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
   <div class="warning-container">
     <div class="warning-icon">⚠️</div>
     <h1>Server ပြင်ဆင်နေသည်...</h1>
