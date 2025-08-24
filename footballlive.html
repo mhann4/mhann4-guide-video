@@ -124,6 +124,28 @@
 </head>
 <body>
   
+  <script>
+    // Define the toggleMenu function globally before it's called
+    function toggleMenu() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      } else {
+        console.error("Sidebar or Overlay not found.");
+      }
+    }
+
+    // Add popstate listener globally
+    window.addEventListener('popstate', (event) => {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar && sidebar.classList.contains('active')) {
+        toggleMenu();
+      }
+    });
+  </script>
+
   <nav class="sidebar" id="sidebar" aria-label="Main menu">
     <a href="drive-video-viewer.html">Home</a>
     <a href="footballlive.html">Football live</a>
@@ -154,26 +176,5 @@
     <h2>Server ပြင်ဆင်နေသည်...</h2>
     <p>နောက်မှ ပြန်လည်ကြိုးစားပေးပါခင်ဗျာ။</p>
   </div>
-  
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-
-    function toggleMenu() {
-      const isActive = sidebar.classList.contains('active');
-      if (!isActive) {
-        history.pushState({ sidebarOpen: true }, '');
-      }
-      sidebar.classList.toggle('active');
-      overlay.classList.toggle('active');
-    }
-    
-    window.addEventListener('popstate', (event) => {
-      if (sidebar.classList.contains('active')) {
-        toggleMenu();
-      }
-    });
-  </script>
-
 </body>
 </html>
