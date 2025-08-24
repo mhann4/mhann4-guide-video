@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Football Live</title>
   <style>
-    /* Styles for the sidebar and overlay */
+    /* Styles for the sidebar and overlay, copied from ml1 */
     .sidebar {
       position: fixed;
       top: 0;
@@ -44,7 +44,7 @@
       color: #fff;
       font-family: sans-serif;
       text-align: center;
-      padding: 20px;
+      padding: 0;
       margin: 0;
       display: flex;
       flex-direction: column;
@@ -59,13 +59,17 @@
         padding: 10px;
         margin-bottom: 20px;
         font-weight: bold;
+        width: 100%;
+        max-width: 500px;
+        box-sizing: border-box;
     }
-    
+
     h1 {
       color: #ff0000;
       font-weight: bold;
       text-align: center;
-      margin-bottom: 20px;
+      margin-top: 20px;
+      margin-bottom: 10px;
       font-size: 1.5rem;
     }
     
@@ -120,32 +124,19 @@
       align-items: center;
       text-decoration: none;
     }
+
+    /* Additional style to handle body padding when sidebar is not present */
+    main {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
   </style>
 </head>
 <body>
   
-  <script>
-    // Define the toggleMenu function globally before it's called
-    function toggleMenu() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      if (sidebar && overlay) {
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-      } else {
-        console.error("Sidebar or Overlay not found.");
-      }
-    }
-
-    // Add popstate listener globally
-    window.addEventListener('popstate', (event) => {
-      const sidebar = document.getElementById('sidebar');
-      if (sidebar && sidebar.classList.contains('active')) {
-        toggleMenu();
-      }
-    });
-  </script>
-
   <nav class="sidebar" id="sidebar" aria-label="Main menu">
     <a href="drive-video-viewer.html">Home</a>
     <a href="footballlive.html">Football live</a>
@@ -158,23 +149,47 @@
 
   <a href="#" onclick="toggleMenu()" class="menu-button">☰</a>
 
-  <div class="ad-banner">
-    1xbet, Loboki, 555mix တို့ကို Mhnn4 ဆီမှာ လာရောက် ဆော့ကစားနိုင်ပါသည်။
-  </div>
+  <main>
+    <div class="ad-banner">
+      1xbet, Loboki, 555mix တို့ကို Mhnn4 ဆီမှာ လာရောက် ဆော့ကစားနိုင်ပါသည်။
+    </div>
 
-  <h1>Football Live</h1>
-  
-  <div class="video-container">
-    <video autoplay loop muted>
-      <source src="fixing-server.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  
-  <div class="warning-container">
-    <div class="warning-icon">⚠️</div>
-    <h2>Server ပြင်ဆင်နေသည်...</h2>
-    <p>နောက်မှ ပြန်လည်ကြိုးစားပေးပါခင်ဗျာ။</p>
-  </div>
+    <h1>Football Live</h1>
+    
+    <div class="video-container">
+      <video autoplay loop muted>
+        <source src="fixing-server.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    
+    <div class="warning-container">
+      <div class="warning-icon">⚠️</div>
+      <h2>Server ပြင်ဆင်နေသည်...</h2>
+      <p>နောက်မှ ပြန်လည်ကြိုးစားပေးပါခင်ဗျာ။</p>
+    </div>
+  </main>
+
+  <script>
+    // JavaScript Functions (Copied from ml1)
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    function toggleMenu() {
+      const isActive = sidebar.classList.contains('active');
+      if (!isActive) {
+        history.pushState({ sidebarOpen: true }, '');
+      }
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    }
+    
+    window.addEventListener('popstate', (event) => {
+      if (sidebar.classList.contains('active')) {
+        toggleMenu();
+      }
+    });
+  </script>
+
 </body>
 </html>
