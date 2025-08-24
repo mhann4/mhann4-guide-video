@@ -124,9 +124,17 @@
 </head>
 <body>
   
-  <a href="#" onclick="toggleMenu()" class="menu-button">☰</a>
+  <nav class="sidebar" id="sidebar" aria-label="Main menu">
+    <a href="drive-video-viewer.html">Home</a>
+    <a href="footballlive.html">Football live</a>
+    <a href="drive-video-viewer.html">Giveaway</a>
+    <a href="drive-video-viewer.html">Contact</a>
+    <a href="drive-video-viewer.html">Profile</a>
+  </nav>
 
-  <div id="menu-placeholder"></div>
+  <div class="overlay" id="overlay" onclick="toggleMenu()" aria-hidden="true"></div>
+
+  <a href="#" onclick="toggleMenu()" class="menu-button">☰</a>
 
   <div class="ad-banner">
     1xbet, Loboki, 555mix တို့ကို Mhnn4 ဆီမှာ လာရောက် ဆော့ကစားနိုင်ပါသည်။
@@ -146,43 +154,25 @@
     <h2>Server ပြင်ဆင်နေသည်...</h2>
     <p>နောက်မှ ပြန်လည်ကြိုးစားပေးပါခင်ဗျာ။</p>
   </div>
-
+  
   <script>
-    // Global variables for menu elements
-    let sidebar;
-    let overlay;
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
 
-    // Fetch and inject menu content as soon as the script is parsed
-    fetch('menu.html')
-      .then(response => response.text())
-      .then(data => {
-        const placeholder = document.getElementById('menu-placeholder');
-        if (placeholder) {
-          placeholder.innerHTML = data;
-          
-          // Get the elements after they have been added to the DOM
-          sidebar = document.getElementById('sidebar');
-          overlay = document.getElementById('overlay');
-
-          // Event listeners for popstate
-          window.addEventListener('popstate', (event) => {
-            if (sidebar && sidebar.classList.contains('active')) {
-              toggleMenu();
-            }
-          });
-        }
-      });
-      
-    // Function that can be called from the HTML, regardless of load state
     function toggleMenu() {
-      if (sidebar && overlay) {
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-      } else {
-        console.error("Sidebar or Overlay not found.");
+      const isActive = sidebar.classList.contains('active');
+      if (!isActive) {
+        history.pushState({ sidebarOpen: true }, '');
       }
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
     }
     
+    window.addEventListener('popstate', (event) => {
+      if (sidebar.classList.contains('active')) {
+        toggleMenu();
+      }
+    });
   </script>
 
 </body>
